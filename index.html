@@ -1,180 +1,260 @@
-<!DOCTYPE html>
-<html lang="es">
+<!DOCTYPE html><html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Simulador Hacker</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nexus Hosting</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
   <style>
-    * { box-sizing: border-box; }
-    body {
+    * {
+      box-sizing: border-box;
       margin: 0;
-      background-color: #0d0d0d;
-      color: #00ff88;
-      font-family: 'Fira Code', monospace;
-      font-size: 16px;
-      overflow: hidden;
-    }
-    #matrix {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: 0;
-    }
-    #console {
-      position: absolute;
-      top: 0;
-      left: 0;
-      z-index: 1;
-      padding: 40px;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-    }
-    #output {
-      flex-grow: 1;
-      white-space: pre-wrap;
-      overflow-y: auto;
-      background-color: rgba(0,0,0,0.5);
-      padding: 20px;
-      border: 1px solid #00ff88;
-      border-radius: 8px;
-      margin-bottom: 10px;
-      box-shadow: 0 0 12px #00ff88 inset;
-    }
-    #input-line {
-      display: flex;
-      align-items: center;
-    }
-    #prompt {
-      margin-right: 10px;
-      color: #00e676;
-    }
-    #commandInput {
-      background: none;
-      border: none;
-      border-bottom: 1px solid #00ff88;
-      color: #00ff88;
-      font-family: inherit;
-      font-size: 16px;
-      padding: 5px;
-      flex: 1;
-      outline: none;
-      transition: border-color 0.3s;
-    }
-    #commandInput:focus {
-      border-color: #00e676;
-    }
-    ::selection {
-      background: #005f3f;
-      color: #00ff88;
-    }
+      padding: 0;
+    }body {
+  font-family: 'Orbitron', sans-serif;
+  background: linear-gradient(to bottom, #0b0b0d 0%, #140018 100%);
+  color: #d4d4ff;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  cursor: none;
+}
+
+header {
+  padding: 2rem;
+  text-align: center;
+  background: linear-gradient(to right, #2d0066, #1a0033);
+  box-shadow: 0 4px 20px rgba(128, 0, 255, 0.4);
+  animation: fadeIn 1s ease-in-out;
+}
+
+header h1 {
+  font-size: 3rem;
+  color: #a973ff;
+  animation: glow 3s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  from {
+    text-shadow: 0 0 5px #a973ff, 0 0 10px #a973ff, 0 0 15px #a973ff;
+  }
+  to {
+    text-shadow: 0 0 10px #cc99ff, 0 0 20px #cc99ff, 0 0 30px #cc99ff;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    transform: translateY(40px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.plans-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  padding: 4rem;
+  background-color: #1a1a1f;
+}
+
+.plan-card {
+  perspective: 1000px;
+  animation: fadeInUp 1s ease forwards;
+}
+
+.plan-inner {
+  position: relative;
+  width: 100%;
+  height: 320px;
+  transition: transform 0.8s ease;
+  transform-style: preserve-3d;
+}
+
+.plan-card:hover .plan-inner {
+  transform: rotateY(180deg);
+}
+
+.plan-front, .plan-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.plan-front {
+  background: #2e003e;
+  color: #fff;
+  transform: rotateY(0deg);
+}
+
+.plan-back {
+  background: #470063;
+  color: #fff;
+  transform: rotateY(180deg);
+}
+
+.plan-back button {
+  margin-top: 1rem;
+  padding: 0.5rem 1.2rem;
+  border: none;
+  border-radius: 6px;
+  background: #a973ff;
+  color: #000;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.plan-back button:hover {
+  background: #d4b3ff;
+}
+
+.why-choose-us {
+  padding: 4rem 2rem;
+  background: #101015;
+  text-align: center;
+  animation: fadeIn 1.5s ease-in-out;
+}
+
+.why-choose-us h2 {
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  color: #c78fff;
+}
+
+.reasons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.reason {
+  flex: 1 1 250px;
+  background: #1c1c26;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(128, 0, 255, 0.2);
+  transition: transform 0.3s ease;
+  animation: fadeInUp 1s ease forwards;
+}
+
+.reason:hover {
+  transform: translateY(-10px);
+}
+
+/* Custom Cursor */
+.cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 15px;
+  height: 15px;
+  background: #a973ff;
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  transition: transform 0.1s ease;
+  z-index: 9999;
+}
+
   </style>
 </head>
 <body>
-<canvas id="matrix"></canvas>
-<div id="console">
-  <div id="output">[SYSTEM] Bienvenido al entorno simulado de intrusión.
-Escribe 'help' para ver comandos disponibles.
-</div>
-  <div id="input-line">
-    <span id="prompt">root@simulador:~$</span>
-    <input type="text" id="commandInput" autofocus />
-  </div>
-</div>
-<audio id="typeSound" src="https://www.soundjay.com/typing/sounds/typing-5.mp3" preload="auto"></audio>
-<script>
-  const canvas = document.getElementById("matrix");
-  const ctx = canvas.getContext("2d");
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-  const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-  const fontSize = 16;
-  const columns = canvas.width / fontSize;
-  const drops = Array.from({ length: columns }).fill(1);
-  function drawMatrix() {
-    ctx.fillStyle = "rgba(13, 13, 13, 0.05)";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = "#00ff88";
-    ctx.font = fontSize + "px monospace";
-    for (let i = 0; i < drops.length; i++) {
-      const text = letters.charAt(Math.floor(Math.random() * letters.length));
-      ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-      if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
-      drops[i]++;
-    }
-  }
-  setInterval(drawMatrix, 50);
-
-  const commandInput = document.getElementById("commandInput");
-  const output = document.getElementById("output");
-  const sound = document.getElementById("typeSound");
-
-  let score = 0;
-  let level = 1;
-
-  const commands = {
-    help: "[COMANDOS DISPONIBLES]\n - connect\n - login\n - scan\n - exploit\n - download\n - status\n - next\n - exit",
-    connect: () => {
-      score += 5;
-      return "[INFO] Conectando al servidor remoto... OK (Score +5)";
-    },
-    login: () => {
-      score += 10;
-      return "[INFO] Usuario root autenticado exitosamente (Score +10)";
-    },
-    scan: () => {
-      score += 7;
-      return "[INFO] Escaneando red local...\nPuertos abiertos: 22 (SSH), 80 (HTTP), 443 (HTTPS) (Score +7)";
-    },
-    exploit: () => {
-      score += 15;
-      return "[EXPLOIT] Vulnerabilidad detectada en puerto 80\n[EXPLOIT] Inyección realizada con éxito (Score +15)";
-    },
-    download: () => {
-      score += 20;
-      return "[TRANSFER] Descargando archivos confidenciales... Completado (Score +20)";
-    },
-    status: () => {
-      return `[STATUS] Nivel: ${level} | Puntos: ${score}`;
-    },
-    next: () => {
-      if (score >= level * 50) {
-        level++;
-        return `[LEVEL UP] Avanzas al nivel ${level}. Nuevos objetivos disponibles.`;
-      } else {
-        return `[ERROR] Necesitas al menos ${level * 50} puntos para subir al siguiente nivel.`;
-      }
-    },
-    exit: () => {
-      return "[SISTEMA] Cerrando sesión. Adiós.";
-    }
-  };
-
-  commandInput.addEventListener("keydown", function(e) {
-    if (e.key === "Enter") {
-      const cmd = commandInput.value.trim();
-      sound.currentTime = 0;
-      sound.play();
-      output.textContent += `\nroot@simulador:~$ ${cmd}\n`;
-      if (commands[cmd]) {
-        const result = typeof commands[cmd] === 'function' ? commands[cmd]() : commands[cmd];
-        output.textContent += result + "\n";
-        if (cmd === "exit") commandInput.disabled = true;
-      } else {
-        output.textContent += `Comando no reconocido: ${cmd}\n`;
-      }
-      output.scrollTop = output.scrollHeight;
-      commandInput.value = "";
-    }
-  });
-
-  window.addEventListener("resize", () => {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-  });
-</script>
-</body>
+  <div class="cursor" id="cursor"></div>
+  <header>
+    <h1>Nexus Hosting</h1>
+    <p>Premium Minecraft Server Hosting with Power and Style</p>
+  </header>  <section class="plans-section">
+    <div class="plan-card">
+      <div class="plan-inner">
+        <div class="plan-front">
+          <h2>Starter Plan</h2>
+          <p>2GB RAM</p>
+          <p>1 vCPU</p>
+        </div>
+        <div class="plan-back">
+          <h3>Starter</h3>
+          <p>Perfect for small survival worlds</p>
+          <p>2GB RAM, 1 vCPU, 10GB SSD</p>
+          <button>Buy Now</button>
+        </div>
+      </div>
+    </div>
+    <div class="plan-card">
+      <div class="plan-inner">
+        <div class="plan-front">
+          <h2>Pro Plan</h2>
+          <p>4GB RAM</p>
+          <p>2 vCPU</p>
+        </div>
+        <div class="plan-back">
+          <h3>Pro</h3>
+          <p>Ideal for medium-size servers</p>
+          <p>4GB RAM, 2 vCPU, 25GB SSD</p>
+          <button>Buy Now</button>
+        </div>
+      </div>
+    </div>
+    <div class="plan-card">
+      <div class="plan-inner">
+        <div class="plan-front">
+          <h2>Elite Plan</h2>
+          <p>8GB RAM</p>
+          <p>4 vCPU</p>
+        </div>
+        <div class="plan-back">
+          <h3>Elite</h3>
+          <p>For large servers or modded packs</p>
+          <p>8GB RAM, 4 vCPU, 50GB SSD</p>
+          <button>Buy Now</button>
+        </div>
+      </div>
+    </div>
+  </section>  <section class="why-choose-us">
+    <h2>Why Choose Nexus Hosting?</h2>
+    <div class="reasons">
+      <div class="reason">
+        <h4>99.9% Uptime</h4>
+        <p>We ensure your server is online when your players need it most.</p>
+      </div>
+      <div class="reason">
+        <h4>Blazing Fast SSDs</h4>
+        <p>Super fast NVMe SSD storage to ensure low latency and quick loading times.</p>
+      </div>
+      <div class="reason">
+        <h4>24/7 Support</h4>
+        <p>Our team is always ready to assist you with anything, anytime.</p>
+      </div>
+      <div class="reason">
+        <h4>Easy Control Panel</h4>
+        <p>Manage your server with ease using our intuitive control panel.</p>
+      </div>
+    </div>
+  </section>  <script>
+    const cursor = document.getElementById("cursor");
+    document.addEventListener("mousemove", e => {
+      cursor.style.top = `${e.clientY}px`;
+      cursor.style.left = `${e.clientX}px`;
+    });
+  </script></body>
 </html>
