@@ -2,19 +2,18 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Hacking en Proceso...</title>
+  <title>Simulador Hacker</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    /* --- Estilo Global --- */
+    * { box-sizing: border-box; }
     body {
       margin: 0;
-      padding: 0;
-      background-color: black;
-      color: #00ff00;
-      font-family: 'Courier New', Courier, monospace;
+      background-color: #0d0d0d;
+      color: #00ff88;
+      font-family: 'Fira Code', monospace;
+      font-size: 16px;
       overflow: hidden;
     }
-
     #matrix {
       position: fixed;
       top: 0;
@@ -23,136 +22,159 @@
       height: 100vh;
       z-index: 0;
     }
-
     #console {
       position: absolute;
       top: 0;
       left: 0;
       z-index: 1;
-      padding: 30px;
-      box-sizing: border-box;
+      padding: 40px;
       width: 100%;
       height: 100%;
       display: flex;
       flex-direction: column;
-      justify-content: flex-start;
-      color: #00ff00;
-      font-size: 16px;
-      line-height: 1.5;
+    }
+    #output {
+      flex-grow: 1;
       white-space: pre-wrap;
+      overflow-y: auto;
+      background-color: rgba(0,0,0,0.5);
+      padding: 20px;
+      border: 1px solid #00ff88;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      box-shadow: 0 0 12px #00ff88 inset;
     }
-
-    .cursor {
-      display: inline-block;
-      background-color: #00ff00;
-      width: 10px;
-      height: 18px;
-      margin-left: 5px;
-      animation: blink 1s infinite;
+    #input-line {
+      display: flex;
+      align-items: center;
     }
-
-    @keyframes blink {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0; }
+    #prompt {
+      margin-right: 10px;
+      color: #00e676;
+    }
+    #commandInput {
+      background: none;
+      border: none;
+      border-bottom: 1px solid #00ff88;
+      color: #00ff88;
+      font-family: inherit;
+      font-size: 16px;
+      padding: 5px;
+      flex: 1;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+    #commandInput:focus {
+      border-color: #00e676;
+    }
+    ::selection {
+      background: #005f3f;
+      color: #00ff88;
     }
   </style>
 </head>
 <body>
-  <canvas id="matrix"></canvas>
-
-  <div id="console">
-    <div id="output"></div><span class="cursor"></span>
+<canvas id="matrix"></canvas>
+<div id="console">
+  <div id="output">[SYSTEM] Bienvenido al entorno simulado de intrusión.
+Escribe 'help' para ver comandos disponibles.
+</div>
+  <div id="input-line">
+    <span id="prompt">root@simulador:~$</span>
+    <input type="text" id="commandInput" autofocus />
   </div>
+</div>
+<audio id="typeSound" src="https://www.soundjay.com/typing/sounds/typing-5.mp3" preload="auto"></audio>
+<script>
+  const canvas = document.getElementById("matrix");
+  const ctx = canvas.getContext("2d");
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  const fontSize = 16;
+  const columns = canvas.width / fontSize;
+  const drops = Array.from({ length: columns }).fill(1);
+  function drawMatrix() {
+    ctx.fillStyle = "rgba(13, 13, 13, 0.05)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "#00ff88";
+    ctx.font = fontSize + "px monospace";
+    for (let i = 0; i < drops.length; i++) {
+      const text = letters.charAt(Math.floor(Math.random() * letters.length));
+      ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+      if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+      drops[i]++;
+    }
+  }
+  setInterval(drawMatrix, 50);
 
-  <!-- Sonido de tecleo -->
-  <audio id="typeSound" src="https://www.soundjay.com/typing/sounds/typing-5.mp3" preload="auto"></audio>
+  const commandInput = document.getElementById("commandInput");
+  const output = document.getElementById("output");
+  const sound = document.getElementById("typeSound");
 
-  <script>
-    // --- MATRIX ANIMATION ---
-    const canvas = document.getElementById("matrix");
-    const ctx = canvas.getContext("2d");
+  let score = 0;
+  let level = 1;
 
+  const commands = {
+    help: "[COMANDOS DISPONIBLES]\n - connect\n - login\n - scan\n - exploit\n - download\n - status\n - next\n - exit",
+    connect: () => {
+      score += 5;
+      return "[INFO] Conectando al servidor remoto... OK (Score +5)";
+    },
+    login: () => {
+      score += 10;
+      return "[INFO] Usuario root autenticado exitosamente (Score +10)";
+    },
+    scan: () => {
+      score += 7;
+      return "[INFO] Escaneando red local...\nPuertos abiertos: 22 (SSH), 80 (HTTP), 443 (HTTPS) (Score +7)";
+    },
+    exploit: () => {
+      score += 15;
+      return "[EXPLOIT] Vulnerabilidad detectada en puerto 80\n[EXPLOIT] Inyección realizada con éxito (Score +15)";
+    },
+    download: () => {
+      score += 20;
+      return "[TRANSFER] Descargando archivos confidenciales... Completado (Score +20)";
+    },
+    status: () => {
+      return `[STATUS] Nivel: ${level} | Puntos: ${score}`;
+    },
+    next: () => {
+      if (score >= level * 50) {
+        level++;
+        return `[LEVEL UP] Avanzas al nivel ${level}. Nuevos objetivos disponibles.`;
+      } else {
+        return `[ERROR] Necesitas al menos ${level * 50} puntos para subir al siguiente nivel.`;
+      }
+    },
+    exit: () => {
+      return "[SISTEMA] Cerrando sesión. Adiós.";
+    }
+  };
+
+  commandInput.addEventListener("keydown", function(e) {
+    if (e.key === "Enter") {
+      const cmd = commandInput.value.trim();
+      sound.currentTime = 0;
+      sound.play();
+      output.textContent += `\nroot@simulador:~$ ${cmd}\n`;
+      if (commands[cmd]) {
+        const result = typeof commands[cmd] === 'function' ? commands[cmd]() : commands[cmd];
+        output.textContent += result + "\n";
+        if (cmd === "exit") commandInput.disabled = true;
+      } else {
+        output.textContent += `Comando no reconocido: ${cmd}\n`;
+      }
+      output.scrollTop = output.scrollHeight;
+      commandInput.value = "";
+    }
+  });
+
+  window.addEventListener("resize", () => {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-
-    const letters = "01";
-    const fontSize = 14;
-    const columns = canvas.width / fontSize;
-    const drops = Array.from({ length: columns }).fill(1);
-
-    function drawMatrix() {
-      ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      ctx.fillStyle = "#00FF00";
-      ctx.font = fontSize + "px monospace";
-
-      for (let i = 0; i < drops.length; i++) {
-        const text = letters.charAt(Math.floor(Math.random() * letters.length));
-        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-
-        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-          drops[i] = 0;
-        }
-
-        drops[i]++;
-      }
-    }
-
-    setInterval(drawMatrix, 50);
-
-    // --- SIMULACIÓN DE CONSOLA ---
-    const output = document.getElementById("output");
-    const typeSound = document.getElementById("typeSound");
-
-    const lines = [
-      "Iniciando protocolo de intrusión...",
-      "Estableciendo conexión con servidor: 192.168.1.45",
-      "Autenticación SSH bypass en curso...",
-      "Acceso root concedido ✅",
-      "Escaneando puertos abiertos...",
-      "Puerto 22 abierto - conexión establecida",
-      "Inyectando exploits personalizados...",
-      "Acceso a base de datos detectado",
-      "Extrayendo información confidencial...",
-      "Transferencia de archivos iniciada...",
-      "Transferencia completada: 348 archivos robados 📁",
-      "Enviando datos al servidor oculto...",
-      "Eliminando rastros del sistema 🧹",
-      "Cierre de sesión forzada",
-      "Proceso finalizado con éxito. 💀"
-    ];
-
-    let currentLine = 0;
-    let currentChar = 0;
-
-    function typeLine() {
-      if (currentLine < lines.length) {
-        const line = lines[currentLine];
-        if (currentChar < line.length) {
-          output.innerHTML += line.charAt(currentChar);
-          try {
-            typeSound.currentTime = 0;
-            typeSound.play();
-          } catch (e) {}
-          currentChar++;
-          setTimeout(typeLine, 30);
-        } else {
-          output.innerHTML += "\n";
-          currentLine++;
-          currentChar = 0;
-          setTimeout(typeLine, 400);
-        }
-      }
-    }
-
-    typeLine();
-
-    // Actualiza tamaño al cambiar ventana
-    window.addEventListener('resize', () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    });
-  </script>
+  });
+</script>
 </body>
 </html>
