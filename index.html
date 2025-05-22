@@ -1,260 +1,417 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Nexus Hosting</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }body {
-  font-family: 'Orbitron', sans-serif;
-  background: linear-gradient(to bottom, #0b0b0d 0%, #140018 100%);
-  color: #d4d4ff;
-  overflow-x: hidden;
-  scroll-behavior: smooth;
-  cursor: none;
-}
-
-header {
-  padding: 2rem;
-  text-align: center;
-  background: linear-gradient(to right, #2d0066, #1a0033);
-  box-shadow: 0 4px 20px rgba(128, 0, 255, 0.4);
-  animation: fadeIn 1s ease-in-out;
-}
-
-header h1 {
-  font-size: 3rem;
-  color: #a973ff;
-  animation: glow 3s ease-in-out infinite alternate;
-}
-
-@keyframes glow {
-  from {
-    text-shadow: 0 0 5px #a973ff, 0 0 10px #a973ff, 0 0 15px #a973ff;
-  }
-  to {
-    text-shadow: 0 0 10px #cc99ff, 0 0 20px #cc99ff, 0 0 30px #cc99ff;
-  }
-}
-
-@keyframes fadeInUp {
-  from {
-    transform: translateY(40px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-.plans-section {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 2rem;
-  padding: 4rem;
-  background-color: #1a1a1f;
-}
-
-.plan-card {
-  perspective: 1000px;
-  animation: fadeInUp 1s ease forwards;
-}
-
-.plan-inner {
-  position: relative;
-  width: 100%;
-  height: 320px;
-  transition: transform 0.8s ease;
-  transform-style: preserve-3d;
-}
-
-.plan-card:hover .plan-inner {
-  transform: rotateY(180deg);
-}
-
-.plan-front, .plan-back {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  backface-visibility: hidden;
-  border-radius: 12px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-  padding: 1.5rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.plan-front {
-  background: #2e003e;
-  color: #fff;
-  transform: rotateY(0deg);
-}
-
-.plan-back {
-  background: #470063;
-  color: #fff;
-  transform: rotateY(180deg);
-}
-
-.plan-back button {
-  margin-top: 1rem;
-  padding: 0.5rem 1.2rem;
-  border: none;
-  border-radius: 6px;
-  background: #a973ff;
-  color: #000;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background 0.3s;
-}
-
-.plan-back button:hover {
-  background: #d4b3ff;
-}
-
-.why-choose-us {
-  padding: 4rem 2rem;
-  background: #101015;
-  text-align: center;
-  animation: fadeIn 1.5s ease-in-out;
-}
-
-.why-choose-us h2 {
-  font-size: 2.5rem;
-  margin-bottom: 2rem;
-  color: #c78fff;
-}
-
-.reasons {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 2rem;
-}
-
-.reason {
-  flex: 1 1 250px;
-  background: #1c1c26;
-  padding: 1.5rem;
-  border-radius: 12px;
-  box-shadow: 0 0 20px rgba(128, 0, 255, 0.2);
-  transition: transform 0.3s ease;
-  animation: fadeInUp 1s ease forwards;
-}
-
-.reason:hover {
-  transform: translateY(-10px);
-}
-
-/* Custom Cursor */
-.cursor {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 15px;
-  height: 15px;
-  background: #a973ff;
-  border-radius: 50%;
-  pointer-events: none;
-  transform: translate(-50%, -50%);
-  transition: transform 0.1s ease;
-  z-index: 9999;
-}
-
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexus Hosting - Premium Minecraft Server Hosting</title>
+    <meta name="description" content="Hosting premium para servidores de Minecraft con 99.9% uptime, SSD ultrarrápidos y soporte 24/7">
+    
+    <!-- Preload critical resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>">
 </head>
 <body>
-  <div class="cursor" id="cursor"></div>
-  <header>
-    <h1>Nexus Hosting</h1>
-    <p>Premium Minecraft Server Hosting with Power and Style</p>
-  </header>  <section class="plans-section">
-    <div class="plan-card">
-      <div class="plan-inner">
-        <div class="plan-front">
-          <h2>Starter Plan</h2>
-          <p>2GB RAM</p>
-          <p>1 vCPU</p>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-content">
+            <div class="loading-logo">
+                <span class="logo-text">NEXUS</span>
+                <div class="loading-dots">
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                </div>
+            </div>
         </div>
-        <div class="plan-back">
-          <h3>Starter</h3>
-          <p>Perfect for small survival worlds</p>
-          <p>2GB RAM, 1 vCPU, 10GB SSD</p>
-          <button>Buy Now</button>
-        </div>
-      </div>
     </div>
-    <div class="plan-card">
-      <div class="plan-inner">
-        <div class="plan-front">
-          <h2>Pro Plan</h2>
-          <p>4GB RAM</p>
-          <p>2 vCPU</p>
-        </div>
-        <div class="plan-back">
-          <h3>Pro</h3>
-          <p>Ideal for medium-size servers</p>
-          <p>4GB RAM, 2 vCPU, 25GB SSD</p>
-          <button>Buy Now</button>
-        </div>
-      </div>
+
+    <!-- Custom Cursor -->
+    <div class="cursor" id="cursor">
+        <div class="cursor-dot"></div>
+        <div class="cursor-outline"></div>
     </div>
-    <div class="plan-card">
-      <div class="plan-inner">
-        <div class="plan-front">
-          <h2>Elite Plan</h2>
-          <p>8GB RAM</p>
-          <p>4 vCPU</p>
+
+    <!-- Particle Background -->
+    <div class="particles-container" id="particles"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <span class="logo-icon">⚡</span>
+                <span class="logo-text">NEXUS</span>
+            </div>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#home" class="nav-link">Inicio</a></li>
+                <li><a href="#plans" class="nav-link">Planes</a></li>
+                <li><a href="#features" class="nav-link">Características</a></li>
+                <li><a href="#contact" class="nav-link">Contacto</a></li>
+            </ul>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
         </div>
-        <div class="plan-back">
-          <h3>Elite</h3>
-          <p>For large servers or modded packs</p>
-          <p>8GB RAM, 4 vCPU, 50GB SSD</p>
-          <button>Buy Now</button>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero" id="home">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1 class="hero-title">
+                    <span class="title-line">NEXUS</span>
+                    <span class="title-line">HOSTING</span>
+                </h1>
+                <p class="hero-subtitle">Premium Minecraft Server Hosting con Poder y Estilo</p>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <div class="stat-number" data-target="99.9">0</div>
+                        <div class="stat-label">% Uptime</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number" data-target="1000">0</div>
+                        <div class="stat-label">+ Servidores</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number" data-target="24">0</div>
+                        <div class="stat-label">/7 Soporte</div>
+                    </div>
+                </div>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary" onclick="scrollToPlans()">
+                        <span>Ver Planes</span>
+                        <div class="btn-particles"></div>
+                    </button>
+                    <button class="btn btn-secondary">
+                        <span>Demo Gratis</span>
+                    </button>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="server-animation">
+                    <div class="server-rack">
+                        <div class="server-unit active"></div>
+                        <div class="server-unit"></div>
+                        <div class="server-unit active"></div>
+                        <div class="server-unit"></div>
+                    </div>
+                    <div class="data-flow">
+                        <div class="data-stream"></div>
+                        <div class="data-stream"></div>
+                        <div class="data-stream"></div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </section>  <section class="why-choose-us">
-    <h2>Why Choose Nexus Hosting?</h2>
-    <div class="reasons">
-      <div class="reason">
-        <h4>99.9% Uptime</h4>
-        <p>We ensure your server is online when your players need it most.</p>
-      </div>
-      <div class="reason">
-        <h4>Blazing Fast SSDs</h4>
-        <p>Super fast NVMe SSD storage to ensure low latency and quick loading times.</p>
-      </div>
-      <div class="reason">
-        <h4>24/7 Support</h4>
-        <p>Our team is always ready to assist you with anything, anytime.</p>
-      </div>
-      <div class="reason">
-        <h4>Easy Control Panel</h4>
-        <p>Manage your server with ease using our intuitive control panel.</p>
-      </div>
-    </div>
-  </section>  <script>
-    const cursor = document.getElementById("cursor");
-    document.addEventListener("mousemove", e => {
-      cursor.style.top = `${e.clientY}px`;
-      cursor.style.left = `${e.clientX}px`;
-    });
-  </script></body>
+        <div class="scroll-indicator">
+            <div class="scroll-arrow"></div>
+        </div>
+    </header>
+
+    <!-- Plans Section -->
+    <section class="plans-section" id="plans">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Nuestros Planes</h2>
+                <p class="section-subtitle">Elige el plan perfecto para tu servidor</p>
+            </div>
+            <div class="plans-grid">
+                <div class="plan-card" data-plan="starter">
+                    <div class="plan-header">
+                        <div class="plan-icon">🚀</div>
+                        <h3 class="plan-name">Starter</h3>
+                        <div class="plan-price">
+                            <span class="currency">$</span>
+                            <span class="amount">9.99</span>
+                            <span class="period">/mes</span>
+                        </div>
+                    </div>
+                    <div class="plan-features">
+                        <div class="feature">
+                            <span class="feature-icon">💾</span>
+                            <span>2GB RAM</span>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-icon">⚡</span>
+                            <span>1 vCPU</span>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-icon">💽</span>
+                            <span>10GB SSD NVMe</span>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-icon">👥</span>
+                            <span>Hasta 10 jugadores</span>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-icon">🛡️</span>
+                            <span>Protección DDoS</span>
+                        </div>
+                    </div>
+                    <button class="plan-btn">
+                        <span>Comenzar Ahora</span>
+                        <div class="btn-hover-effect"></div>
+                    </button>
+                    <div class="plan-popular">Más Popular</div>
+                </div>
+
+                <div class="plan-card featured" data-plan="pro">
+                    <div class="plan-header">
+                        <div class="plan-icon">⚡</div>
+                        <h3 class="plan-name">Pro</h3>
+                        <div class="plan-price">
+                            <span class="currency">$</span>
+                            <span class="amount">19.99</span>
+                            <span class="period">/mes</span>
+                        </div>
+                    </div>
+                    <div class="plan-features">
+                        <div class="feature">
+                            <span class="feature-icon">💾</span>
+                            <span>4GB RAM</span>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-icon">⚡</span>
+                            <span>2 vCPU</span>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-icon">💽</span>
+                            <span>25GB SSD NVMe</span>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-icon">👥</span>
+                            <span>Hasta 25 jugadores</span>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-icon">🛡️</span>
+                            <span>Protección DDoS Pro</span>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-icon">🔧</span>
+                            <span>Mods & Plugins</span>
+                        </div>
+                    </div>
+                    <button class="plan-btn">
+                        <span>Elegir Pro</span>
+                        <div class="btn-hover-effect"></div>
+                    </button>
+                    <div class="plan-badge">Recomendado</div>
+                </div>
+
+                <div class="plan-card" data-plan="elite">
+                    <div class="plan-header">
+                        <div class="plan-icon">👑</div>
+                        <h3 class="plan-name">Elite</h3>
+                        <div class="plan-price">
+                            <span class="currency">$</span>
+                            <span class="amount">39.99</span>
+                            <span class="period">/mes</span>
+                        </div>
+                    </div>
+                    <div class="plan-features">
+                        <div class="feature">
+                            <span class="feature-icon">💾</span>
+                            <span>8GB RAM</span>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-icon">⚡</span>
+                            <span>4 vCPU</span>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-icon">💽</span>
+                            <span>50GB SSD NVMe</span>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-icon">👥</span>
+                            <span>Jugadores ilimitados</span>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-icon">🛡️</span>
+                            <span>Protección DDoS Elite</span>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-icon">🔧</span>
+                            <span>Soporte prioritario</span>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-icon">🚀</span>
+                            <span>Backups automáticos</span>
+                        </div>
+                    </div>
+                    <button class="plan-btn">
+                        <span>Ir Elite</span>
+                        <div class="btn-hover-effect"></div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section" id="features">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">¿Por qué elegir Nexus?</h2>
+                <p class="section-subtitle">Características que nos hacen únicos</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="feature-icon-wrapper">
+                        <div class="feature-icon">🚀</div>
+                        <div class="icon-glow"></div>
+                    </div>
+                    <h3 class="feature-title">99.9% Uptime</h3>
+                    <p class="feature-description">Garantizamos que tu servidor esté disponible cuando tus jugadores más lo necesiten</p>
+                    <div class="feature-metric">
+                        <span class="metric-number">99.9</span>
+                        <span class="metric-label">% Disponibilidad</span>
+                    </div>
+                </div>
+
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="feature-icon-wrapper">
+                        <div class="feature-icon">⚡</div>
+                        <div class="icon-glow"></div>
+                    </div>
+                    <h3 class="feature-title">SSD Ultra Rápidos</h3>
+                    <p class="feature-description">Almacenamiento NVMe SSD para tiempos de carga súper rápidos y baja latencia</p>
+                    <div class="feature-metric">
+                        <span class="metric-number">5x</span>
+                        <span class="metric-label">Más rápido</span>
+                    </div>
+                </div>
+
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="feature-icon-wrapper">
+                        <div class="feature-icon">🛡️</div>
+                        <div class="icon-glow"></div>
+                    </div>
+                    <h3 class="feature-title">Soporte 24/7</h3>
+                    <p class="feature-description">Nuestro equipo experto está siempre listo para ayudarte con cualquier problema</p>
+                    <div class="feature-metric">
+                        <span class="metric-number">24</span>
+                        <span class="metric-label">Horas soporte</span>
+                    </div>
+                </div>
+
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="400">
+                    <div class="feature-icon-wrapper">
+                        <div class="feature-icon">🎛️</div>
+                        <div class="icon-glow"></div>
+                    </div>
+                    <h3 class="feature-title">Panel Intuitivo</h3>
+                    <p class="feature-description">Gestiona tu servidor fácilmente con nuestro panel de control avanzado</p>
+                    <div class="feature-metric">
+                        <span class="metric-number">1</span>
+                        <span class="metric-label">Click setup</span>
+                    </div>
+                </div>
+
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="500">
+                    <div class="feature-icon-wrapper">
+                        <div class="feature-icon">🔒</div>
+                        <div class="icon-glow"></div>
+                    </div>
+                    <h3 class="feature-title">Protección DDoS</h3>
+                    <p class="feature-description">Protección avanzada contra ataques DDoS para mantener tu servidor seguro</p>
+                    <div class="feature-metric">
+                        <span class="metric-number">100</span>
+                        <span class="metric-label">Gbps protección</span>
+                    </div>
+                </div>
+
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="600">
+                    <div class="feature-icon-wrapper">
+                        <div class="feature-icon">🌍</div>
+                        <div class="icon-glow"></div>
+                    </div>
+                    <h3 class="feature-title">Red Global</h3>
+                    <p class="feature-description">Servidores distribuidos globalmente para la mejor experiencia de juego</p>
+                    <div class="feature-metric">
+                        <span class="metric-number">12</span>
+                        <span class="metric-label">Ubicaciones</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2 class="cta-title">¿Listo para crear tu servidor perfecto?</h2>
+                <p class="cta-subtitle">Únete a miles de jugadores que confían en Nexus Hosting</p>
+                <div class="cta-buttons">
+                    <button class="btn btn-primary btn-large">
+                        <span>Comenzar Gratis</span>
+                        <div class="btn-particles"></div>
+                    </button>
+                    <button class="btn btn-outline btn-large">
+                        <span>Ver Demo</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <span class="logo-icon">⚡</span>
+                        <span class="logo-text">NEXUS</span>
+                    </div>
+                    <p class="footer-description">El hosting de Minecraft más confiable y potente del mercado.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link">📧</a>
+                        <a href="#" class="social-link">🐦</a>
+                        <a href="#" class="social-link">💬</a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4 class="footer-title">Servicios</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Hosting Minecraft</a></li>
+                        <li><a href="#">Servidores VPS</a></li>
+                        <li><a href="#">Hosting Web</a></li>
+                        <li><a href="#">CDN Global</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4 class="footer-title">Soporte</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Centro de Ayuda</a></li>
+                        <li><a href="#">Contacto</a></li>
+                        <li><a href="#">Estado del Servicio</a></li>
+                        <li><a href="#">API</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4 class="footer-title">Legal</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Términos de Servicio</a></li>
+                        <li><a href="#">Política de Privacidad</a></li>
+                        <li><a href="#">Cookies</a></li>
+                        <li><a href="#">SLA</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Nexus Hosting. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+</body>
 </html>
